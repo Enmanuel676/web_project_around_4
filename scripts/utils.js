@@ -1,18 +1,21 @@
 const popup = document.querySelector(".popup");
 //Initial Code Profile
-let edit = document.querySelector(".profile__info-link");
-let pageEdit = document.querySelector("#edit");
+const edit = document.querySelector(".profile__info-link");
+const pageEdit = document.querySelector("#edit");
 const exit = document.querySelectorAll(".popup__exit");
 //intial Code Cards
 const addCard = document.querySelector(".profile__info_add");
-let pageCards = document.querySelector("#card");
-export class Popups {
-  constructor() {
+const pageCards = document.querySelector("#card");
+export class Card {
+  constructor(imageCard, imageName, imageShow) {
     this.openEditPopup = this.openEditPopup.bind(this);
     this.openCardsPopup = this.openCardsPopup.bind(this);
     this.closePopups = this.closePopups.bind(this);
     this._escapeKey = this._escapeKey.bind(this);
     this._eventListeners = this.eventListeners.bind(this);
+    this.imageCard = document.querySelector("#image-card");
+    this.imageName = document.querySelector(".image__name");
+    this.imageShow = document.querySelector(".image__show");
   }
   openEditPopup() {
     pageEdit.classList.remove("popup");
@@ -45,21 +48,12 @@ export class Popups {
 
     popup.addEventListener("dblclick", this.closePopups);
   }
-}
-
-//Open Photo
-export class Images {
-  constructor(imageCard, imageName, imageShow) {
-    this.imageCard = document.querySelector("#image-card");
-    this.imageName = document.querySelector(".image__name");
-    this.imageShow = document.querySelector(".image__show");
-  }
-
   openImage(title, link) {
     this.imageCard.classList.remove("image__card");
     this.imageCard.classList.add("image__card_hidden");
     this.imageName.textContent = title;
     this.imageShow.src = link;
+    this.imageShow.alt = title;
   }
   closeImage() {
     this.imageCard.classList.add("image__card");

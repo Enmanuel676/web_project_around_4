@@ -5,13 +5,15 @@ const cardsLink = document.querySelector("#url");
 const grid = document.querySelector(".grid");
 const template = document.querySelector("#template").content;
 
-import { Images } from "./utils.js";
-const openPhoto = new Images();
+import { Card } from "./utils.js";
+const openPhoto = new Card();
 
-export class CreateCards {
-  constructor(title, link) {
+export class GridCards {
+  constructor(title, link, item) {
     this.title = title;
     this.link = link;
+    this.item = item;
+    this.alt = title;
     this.gridCard = template.querySelector(".grid__card").cloneNode(true);
     this.cardTitle = this.gridCard.querySelector(".grid__name");
     this.cardImage = this.gridCard.querySelector(".grid__image");
@@ -23,7 +25,6 @@ export class CreateCards {
     this.cardTitle.textContent = this.title;
     this.cardImage.src = this.link;
     this.cardImage.alt = this.title;
-    grid.append(this.gridCard);
     return this.gridCard;
   }
   eventListener() {
@@ -31,19 +32,34 @@ export class CreateCards {
       this.cardLike.classList.toggle("grid__like_active");
     });
     this.cardImage.addEventListener("click", () => {
-      openPhoto.openImage(this.title, this.link);
+      utils.openImage(this.title, this.link, this.alt);
     });
     this.imageClose.addEventListener("click", () => {
-      openPhoto.closeImage();
+      utils.closeImage();
     });
     this.imageCard.addEventListener("dblclick", () => {
-      openPhoto.closeImage();
+      utils.closeImage();
     });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        openPhoto.closeImage();
+        utils.closeImage();
       }
     });
+    cardsForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      this._cardsCreate();
+    });
+  }
+  _enterKey() {
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        utils.closePopups();
+      }
+    });
+  }
+  _cardsCreate() {
+    const newCard = this.create(cardsTitle.value, cardsLink.value);
+    grid.prepend(newCard);
   }
 
   deleteCards() {
@@ -52,23 +68,6 @@ export class CreateCards {
         const card = event.target.closest(".grid__card");
         card.remove();
       }
-    });
-  }
-}
-
-//Add Cards
-export class AddCards {
-  constructor(item) {
-    this.item = item;
-  }
-  _cardsCreate() {
-    const newCard = new CreateCards(cardsTitle.value, cardsLink.value);
-    grid.prepend(newCard.create());
-  }
-  eventListener() {
-    cardsForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      this._cardsCreate();
     });
   }
 }
