@@ -4,16 +4,15 @@ const cardsTitle = document.querySelector("#title");
 const cardsLink = document.querySelector("#url");
 const grid = document.querySelector(".grid");
 const template = document.querySelector("#template").content;
+const gridCard = template.querySelector(".grid__card").cloneNode(true);
+import { Popups } from "./utils.js";
+const openPhoto = new Popups();
 
-import { Card } from "./utils.js";
-const openPhoto = new Card();
-
-export class GridCards {
-  constructor(title, link, item) {
+export class CardManager {
+  constructor(title, link) {
     this.title = title;
     this.link = link;
-    this.item = item;
-    this.alt = title;
+
     this.gridCard = template.querySelector(".grid__card").cloneNode(true);
     this.cardTitle = this.gridCard.querySelector(".grid__name");
     this.cardImage = this.gridCard.querySelector(".grid__image");
@@ -25,41 +24,28 @@ export class GridCards {
     this.cardTitle.textContent = this.title;
     this.cardImage.src = this.link;
     this.cardImage.alt = this.title;
+    grid.append(this.gridCard);
     return this.gridCard;
   }
-  eventListener() {
+
+  eventListeners() {
     this.cardLike.addEventListener("click", () => {
       this.cardLike.classList.toggle("grid__like_active");
     });
     this.cardImage.addEventListener("click", () => {
-      utils.openImage(this.title, this.link, this.alt);
+      openPhoto.openImage(this.title, this.link);
     });
     this.imageClose.addEventListener("click", () => {
-      utils.closeImage();
+      openPhoto.closeImage();
     });
     this.imageCard.addEventListener("dblclick", () => {
-      utils.closeImage();
+      openPhoto.closeImage();
     });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        utils.closeImage();
+        openPhoto.closeImage();
       }
     });
-    cardsForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      this._cardsCreate();
-    });
-  }
-  _enterKey() {
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        utils.closePopups();
-      }
-    });
-  }
-  _cardsCreate() {
-    const newCard = this.create(cardsTitle.value, cardsLink.value);
-    grid.prepend(newCard);
   }
 
   deleteCards() {
@@ -68,6 +54,24 @@ export class GridCards {
         const card = event.target.closest(".grid__card");
         card.remove();
       }
+    });
+  }
+}
+
+//Add Cards
+export class CardGenerator extends CardManager {
+  generateCards() {
+    const title = cardsTitle.value;
+    const link = cardsLink.value;
+    const cardManager = new CardManager(title, link);
+    const newCard = cardManager.create();
+    cardManager.eventListeners();
+    grid.prepend(newCard);
+  }
+  eventListener() {
+    cardsForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      this.generateCards();
     });
   }
 }

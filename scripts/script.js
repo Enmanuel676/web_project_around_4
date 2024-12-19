@@ -5,8 +5,8 @@ const imageName = document.querySelector(".image__name");
 const exit = document.querySelectorAll(".popup__exit");
 const main = document.querySelector(".main");
 
-const pageEdit = document.querySelector("#edit");
-const editSave = document.querySelector("#button");
+let pageEdit = document.querySelector("#edit");
+let editSave = document.querySelector("#button");
 const initialCards = [
   {
     title: "Valle de Yosemite",
@@ -102,22 +102,23 @@ saveDisabled();
 //Import and implement the classes in the script.js file
 
 //utils.js
-import { Card } from "./utils.js";
-const openPopups = new Card();
+import { Popups } from "./utils.js";
+const openPopups = new Popups();
 openPopups._eventListeners();
 
 //Card.js
-import { GridCards } from "./Card.js";
-const card = new GridCards();
+import { CardManager, CardGenerator } from "./Card.js";
+const card = new CardManager();
 card.deleteCards();
+const generateCards = new CardGenerator();
+generateCards.eventListener();
 initialCards.forEach((element) => {
-  const cards = new GridCards(element.title, element.link);
-  cards.create();
-  cards.eventListener();
+  const card = new CardManager(element.title, element.link);
+  card.create();
+  card.eventListeners();
 });
 
-card.eventListener();
-card._enterKey();
+card.eventListeners();
 
 //FormValidator.js
 import { FormValidator } from "./FormValidator.js";
