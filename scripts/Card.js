@@ -5,8 +5,8 @@ const cardsLink = document.querySelector("#url");
 const grid = document.querySelector(".grid");
 const template = document.querySelector("#template").content;
 const gridCard = template.querySelector(".grid__card").cloneNode(true);
-import { Popups } from "./utils.js";
-const popup = new Popups();
+import { Card } from "./utils.js";
+const popup = new Card();
 
 export class CardManager {
   constructor(title, link) {

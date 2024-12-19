@@ -102,8 +102,8 @@ saveDisabled();
 //Import and implement the classes in the script.js file
 
 //utils.js
-import { Popups } from "./utils.js";
-const popups = new Popups();
+import { Card } from "./utils.js";
+const popups = new Card();
 popups._eventListeners();
 
 //Card.js

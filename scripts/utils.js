@@ -7,7 +7,7 @@ const exit = document.querySelectorAll(".popup__exit");
 const addCard = document.querySelector(".profile__info_add");
 const pageCards = document.querySelector("#card");
 const cardsForm = document.querySelector("#cards");
-export class Popups {
+export class Card {
   constructor(imageCard, imageName, imageShow) {
     this.openEditPopup = this.openEditPopup.bind(this);
     this.openCardsPopup = this.openCardsPopup.bind(this);
