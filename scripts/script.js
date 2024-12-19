@@ -103,8 +103,8 @@ saveDisabled();
 
 //utils.js
 import { Popups } from "./utils.js";
-const openPopups = new Popups();
-openPopups._eventListeners();
+const popups = new Popups();
+popups._eventListeners();
 
 //Card.js
 import { CardManager, CardGenerator } from "./Card.js";

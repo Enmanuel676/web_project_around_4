@@ -6,7 +6,7 @@ const grid = document.querySelector(".grid");
 const template = document.querySelector("#template").content;
 const gridCard = template.querySelector(".grid__card").cloneNode(true);
 import { Popups } from "./utils.js";
-const openPhoto = new Popups();
+const popup = new Popups();
 
 export class CardManager {
   constructor(title, link) {
@@ -33,17 +33,17 @@ export class CardManager {
       this.cardLike.classList.toggle("grid__like_active");
     });
     this.cardImage.addEventListener("click", () => {
-      openPhoto.openImage(this.title, this.link);
+      popup.openImage(this.title, this.link);
     });
     this.imageClose.addEventListener("click", () => {
-      openPhoto.closeImage();
+      popup.closeImage();
     });
     this.imageCard.addEventListener("dblclick", () => {
-      openPhoto.closeImage();
+      popup.closeImage();
     });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        openPhoto.closeImage();
+        popup.closeImage();
       }
     });
   }

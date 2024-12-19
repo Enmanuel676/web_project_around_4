@@ -6,12 +6,14 @@ const exit = document.querySelectorAll(".popup__exit");
 //intial Code Cards
 const addCard = document.querySelector(".profile__info_add");
 const pageCards = document.querySelector("#card");
+const cardsForm = document.querySelector("#cards");
 export class Popups {
   constructor(imageCard, imageName, imageShow) {
     this.openEditPopup = this.openEditPopup.bind(this);
     this.openCardsPopup = this.openCardsPopup.bind(this);
     this.closePopups = this.closePopups.bind(this);
     this._escapeKey = this._escapeKey.bind(this);
+    this.enterKey = this.enterKey.bind(this);
     this._eventListeners = this.eventListeners.bind(this);
     this.imageCard = document.querySelector("#image-card");
     this.imageName = document.querySelector(".image__name");
@@ -37,11 +39,18 @@ export class Popups {
       this.closePopups();
     }
   }
+  enterKey(evt) {
+    if (evt.key === "Enter") {
+      this.closePopups();
+    }
+  }
+
   eventListeners() {
     addCard.addEventListener("click", this.openCardsPopup);
     edit.addEventListener("click", this.openEditPopup);
 
     document.addEventListener("keydown", this._escapeKey);
+    cardsForm.addEventListener("submit", this.closePopups);
     exit.forEach((exit) => {
       exit.addEventListener("click", this.closePopups);
     });
